@@ -76,7 +76,16 @@ namespace ProjectPartA_A1
                     if (myArticle.Contains(";"))
                     {
                         var mySplit = myArticle.Split(";");
-                        if(decimal.TryParse(mySplit[1], out decimal validPrice))
+                        bool IsADecimal = decimal.TryParse(mySplit[1], out decimal validPrice);
+                        if (!IsADecimal)
+                        {
+                            Console.WriteLine("Price error");
+                            result = false;
+                        }
+
+                        if (IsADecimal)
+                            
+                            //if (decimal.TryParse(mySplit[1], out decimal validPrice))
                         {
                             if(mySplit[0].Length != 0 && mySplit[0].Length<= _maxNrArticles)
                             {
@@ -90,13 +99,13 @@ namespace ProjectPartA_A1
                             }
                             else
                             {
-                                Console.WriteLine("The name is not valid! Try again!");
+                                Console.WriteLine("Name error! Try again!");
                             }
 
                         }
                         else
                         {
-                            Console.WriteLine("The input is not a valid number, please try again!");
+                            Console.WriteLine("Number error, please try again!");
                         }
                     }
                     else
@@ -123,19 +132,21 @@ namespace ProjectPartA_A1
             Console.WriteLine();
             Console.WriteLine();
 
-            Console.WriteLine("{0,0} {1,-15} {2,-15:C2}", "#", "Name", "Price");
+            Console.WriteLine("{0,-5} {1,-30} {2,-30:C2}", "#", "Name", "Price");
 
             decimal totalPrice = 0;
             for (int i = 0; i < nrArticles; i++)
             {
 
 
-                Console.WriteLine("{0,0} {1,-15} {2,-15:C2}",i, articles[i].Name, articles[i].Price);
+                Console.WriteLine("{0,-5} {1,-30} {2,-30:C2}",i, articles[i].Name, articles[i].Price);
                 totalPrice += articles[i].Price;
             }
 
-            Console.WriteLine($"Total purchase:          {totalPrice:C2}");
-            Console.WriteLine($"Includes VAT(25%):          {totalPrice * _vat:C2}");
+            Console.WriteLine();
+
+            Console.WriteLine("{0,-36} {1,-15}", "Total purchase", $"{totalPrice:c}");
+            Console.WriteLine("{0,-36} {1,-15}", "Includes VAT (25%):", $"{ _vat:c}");
 
         }
     }
